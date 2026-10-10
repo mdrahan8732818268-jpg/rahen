@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarbiyah Staff - Conduct & Standings Portal (Staff Sea View)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            arabic: ['"Amiri"', 'serif'],
+          },
+          colors: {
+            tarbiyah: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 9999px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background-color: #f8fafc; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- Startup Screen (Logo + Loading Spinner) -->
+  <div id="splashScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-900 text-white transition-opacity duration-700">
+    <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-tarbiyah-700 to-emerald-500 flex items-center justify-center text-white shadow-2xl shadow-emerald-500/30 mb-6 animate-bounce">
+      <i class="fa-solid fa-seedling text-4xl"></i>
+    </div>
+    <div class="flex items-center gap-2 mb-2">
+      <span class="text-3xl font-extrabold tracking-tight text-white">Tarbiyah<span class="text-emerald-400 font-bold">Staff</span></span>
+      <span class="px-2.5 py-0.5 text-xs font-bold text-emerald-300 bg-emerald-950/80 rounded-full border border-emerald-500/40">تزكية & سلوك</span>
+    </div>
+    <p class="text-xs text-slate-400 tracking-widest uppercase mb-8">Staff Conduct & Record Feed</p>
+    
+    <div class="w-9 h-9 border-4 border-emerald-500/20 border-t-emerald-400 rounded-full animate-spin"></div>
+    <p class="text-[11px] text-slate-400 mt-4 tracking-wider">Loading staff records...</p>
+  </div>
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-center justify-between py-3 gap-3">
+        
+        <!-- Branding -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-tarbiyah-700 to-emerald-600 flex items-center justify-center text-white shadow-md shadow-tarbiyah-700/25">
+              <i class="fa-solid fa-seedling text-xl"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xl font-extrabold tracking-tight text-slate-900">Tarbiyah<span class="text-tarbiyah-600 font-bold">Staff</span></span>
+                <span class="px-2 py-0.5 text-[10px] font-bold text-emerald-800 bg-emerald-100 rounded-full border border-emerald-200">Staff View (Sea Portal)</span>
+              </div>
+              <p class="text-[11px] text-slate-500 font-medium">Islamic Character, Discipline & Conduct Scoring</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 text-xs text-slate-500 bg-slate-100 px-3.5 py-1.5 rounded-xl border border-slate-200">
+          <i class="fa-solid fa-eye text-emerald-600"></i>
+          <span class="font-semibold text-slate-700">Read-Only View</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- Top Banner Card -->
+    <div class="relative overflow-hidden bg-gradient-to-r from-tarbiyah-900 via-emerald-950 to-slate-900 rounded-3xl p-6 sm:p-7 text-white shadow-xl shadow-tarbiyah-950/20">
+      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-1.5 max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-800/60 border border-emerald-600/40 text-emerald-200 text-xs font-medium">
+            <i class="fa-solid fa-scale-balanced text-amber-400"></i> الأخلاق والسلوك والأداء الأكاديمي
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">Staff Conduct & Virtue Standings</h1>
+          <p class="text-xs sm:text-sm text-emerald-100/80 leading-relaxed">
+            Monitor positive commendations (+), developmental warnings (-), and Tarbiyah points across all faculties.
+          </p>
+        </div>
+
+        <div class="bg-white/10 border border-white/20 rounded-2xl p-3.5 backdrop-blur-xs max-w-sm w-full text-xs">
+          <p class="font-bold text-emerald-200 flex items-center gap-1.5 mb-2">
+            <i class="fa-solid fa-magnifying-glass"></i> Find Your Records
+          </p>
+          <input type="text" id="seaQuickFind" oninput="quickSearch(event)" placeholder="Search by your Name or TRB ID..." class="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/20 text-white text-xs placeholder:text-slate-400 outline-none focus:border-emerald-400">
+        </div>
+      </div>
+      <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl text-emerald-300 pointer-events-none">
+        <i class="fa-solid fa-mosque"></i>
+      </div>
+    </div>
+
+    <!-- Metrics Counters (Positive / Negative / Total) -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs">
+        <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Total Faculty</p>
+        <h3 id="statTotalStaff" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">0</h3>
+        <span class="inline-block text-[11px] font-medium text-emerald-600 mt-1">Active scholars</span>
+      </div>
+
+      <div class="bg-white p-4 rounded-2xl border border-emerald-100 shadow-xs">
+        <div class="flex items-center justify-between">
+          <p class="text-[11px] font-semibold text-emerald-700 uppercase tracking-wider">Positive Merits (+)</p>
+          <i class="fa-solid fa-circle-check text-emerald-500 text-sm"></i>
+        </div>
+        <h3 id="statPositiveCount" class="text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-1">0</h3>
+        <span id="statPositivePoints" class="inline-block text-[11px] font-semibold text-emerald-700 mt-1">+0 pts</span>
+      </div>
+
+      <div class="bg-white p-4 rounded-2xl border border-rose-100 shadow-xs">
+        <div class="flex items-center justify-between">
+          <p class="text-[11px] font-semibold text-rose-600 uppercase tracking-wider">Negative Demerits (-)</p>
+          <i class="fa-solid fa-triangle-exclamation text-rose-500 text-sm"></i>
+        </div>
+        <h3 id="statNegativeCount" class="text-2xl sm:text-3xl font-extrabold text-rose-600 mt-1">0</h3>
+        <span id="statNegativePoints" class="inline-block text-[11px] font-semibold text-rose-600 mt-1">-0 pts</span>
+      </div>
+
+      <div class="bg-white p-4 rounded-2xl border border-amber-100 shadow-xs">
+        <div class="flex items-center justify-between">
+          <p class="text-[11px] font-semibold text-amber-600 uppercase tracking-wider">Top Honor Staff</p>
+          <i class="fa-solid fa-award text-amber-500 text-sm"></i>
+        </div>
+        <h4 id="statTopStaff" class="text-sm sm:text-base font-extrabold text-slate-900 mt-1 truncate">None</h4>
+        <span id="statTopStaffScore" class="inline-block text-[11px] font-bold text-amber-700 mt-0.5">Score: 0</span>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="border-b border-slate-200">
+      <nav class="flex space-x-6 overflow-x-auto pb-1">
+        <button onclick="switchTab('directory')" id="tabBtnDirectory" class="pb-3 px-1 border-b-2 border-tarbiyah-700 font-bold text-sm text-tarbiyah-800 flex items-center gap-2 whitespace-nowrap">
+          <i class="fa-solid fa-id-card"></i> Staff Directory & Standings
+          <span id="badgeStaffCount" class="ml-1 px-2 py-0.5 text-xs rounded-full bg-tarbiyah-100 text-tarbiyah-800">0</span>
+        </button>
+        <button onclick="switchTab('remarksLog')" id="tabBtnRemarksLog" class="pb-3 px-1 border-b-2 border-transparent font-medium text-sm text-slate-500 hover:text-slate-700 hover:border-slate-300 flex items-center gap-2 whitespace-nowrap">
+          <i class="fa-solid fa-clipboard-list"></i> Conduct Observations Feed
+          <span id="badgeLogCount" class="ml-1 px-2 py-0.5 text-xs rounded-full bg-slate-100 text-slate-700">0</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Tab 1: Staff Directory -->
+    <section id="tabContentDirectory" class="space-y-4">
+      <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+        <div class="flex-1 flex flex-col sm:flex-row gap-3">
+          
+          <!-- Search input -->
+          <div class="relative flex-1">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+              <i class="fa-solid fa-magnifying-glass text-xs"></i>
+            </span>
+            <input type="text" id="directorySearchInput" oninput="applyFilters()" placeholder="Search staff name, ID, or subject..." 
+              class="w-full pl-9 pr-4 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-tarbiyah-500/20 focus:border-tarbiyah-500 outline-none transition">
+          </div>
+
+          <!-- Department dropdown -->
+          <div class="w-full sm:w-64">
+            <select id="departmentFilter" onchange="applyFilters()" class="w-full px-3 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-tarbiyah-500/20 outline-none text-slate-700 font-medium">
+              <option value="ALL">All Departments (جميع الأقسام)</option>
+              <optgroup label="Islamic & Classical Studies">
+                <option value="Islamic History">Islamic History (التاريخ الإسلامي)</option>
+                <option value="Nahw & Sarf">Nahw & Sarf (النحو والصرف)</option>
+                <option value="Fiqh & Usul">Fiqh & Usul al-Fiqh (الفقه وأصوله)</option>
+                <option value="Tasawwuf (TSF)">Tasawwuf & Tazkiyah / TSF (التصوف)</option>
+                <option value="Tafseer & Hadith">Tafseer & Hadith (التفسير والحديث)</option>
+                <option value="Hifz & Quran">Hifz & Quran (تحفيظ القرآن)</option>
+              </optgroup>
+              <optgroup label="Sciences & Academics">
+                <option value="Natural Sciences">Natural Sciences (العلوم الطبيعية)</option>
+                <option value="Political Science">Political Science (العلوم السياسية)</option>
+                <option value="Mathematics & Logic">Mathematics & Logic (الرياضيات والمنطق)</option>
+                <option value="Languages & Literature">Languages & English (اللغات والأدب)</option>
+              </optgroup>
+              <optgroup label="Administration & Affairs">
+                <option value="Tarbiyah & Student Affairs">Tarbiyah & Student Affairs (التربية)</option>
+                <option value="Administration & Maktab">Administration & Maktab (الإدارة)</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Standing filter -->
+          <div class="w-full sm:w-44">
+            <select id="standingFilter" onchange="applyFilters()" class="w-full px-3 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-tarbiyah-500/20 outline-none text-slate-700 font-medium">
+              <option value="ALL">All Standings</option>
+              <option value="EXEMPLARY">Exemplary (+20 & above)</option>
+              <option value="GOOD">Good Standing (0 to 19)</option>
+              <option value="NEEDS_TARBIYAH">Needs Tarbiyah (Negative)</option>
+            </select>
+          </div>
+        </div>
+
+        <button onclick="resetFilters()" class="px-3.5 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
+          Reset Filters
+        </button>
+      </div>
+
+      <!-- Staff Cards Grid -->
+      <div id="staffCardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+      <div id="noStaffFound" class="hidden p-12 text-center bg-white rounded-2xl border border-slate-200">
+        <i class="fa-solid fa-user-slash text-3xl text-slate-300 mb-2"></i>
+        <p class="text-sm font-semibold text-slate-700">No staff records match your selected filters</p>
+      </div>
+    </section>
+
+    <!-- Tab 2: Conduct History Log with Positive / Negative filter -->
+    <section id="tabContentRemarksLog" class="hidden space-y-4">
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">Conduct Remarks & Observation Feed</h2>
+            <p class="text-xs text-slate-500">Documented moral commendations, punctuality scores, and corrective notes.</p>
+          </div>
+
+          <!-- Positive / Negative Log Switcher -->
+          <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl">
+            <button onclick="filterRemarksLog('ALL')" id="filterLogAll" class="px-3 py-1.5 text-xs font-bold rounded-lg bg-white shadow-xs text-slate-800">
+              All
+            </button>
+            <button onclick="filterRemarksLog('POSITIVE')" id="filterLogPositive" class="px-3 py-1.5 text-xs font-bold rounded-lg text-emerald-700 hover:text-emerald-900">
+              <i class="fa-solid fa-plus-circle mr-1"></i> Positive Only
+            </button>
+            <button onclick="filterRemarksLog('NEGATIVE')" id="filterLogNegative" class="px-3 py-1.5 text-xs font-bold rounded-lg text-rose-700 hover:text-rose-900">
+              <i class="fa-solid fa-minus-circle mr-1"></i> Negative Only
+            </button>
+          </div>
+        </div>
+
+        <div id="remarksTimelineList" class="divide-y divide-slate-100 mt-2"></div>
+
+        <div id="noRemarksFound" class="hidden p-8 text-center text-slate-400 text-xs">
+          No conduct records found under this filter.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let currentLogFilter = 'ALL';
+
+    // Default Faculty Data (Including Classical & Modern Science Departments)
+    const defaultStaff = [
+      {
+        id: "TRB-101",
+        name: "Ustadh Bilal Mansoor",
+        role: "Senior Nahw & Sarf Lecturer",
+        dept: "Nahw & Sarf",
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200"
+      },
+      {
+        id: "TRB-102",
+        name: "Mufti Zubair Al-Hanafi",
+        role: "Head of Fiqh & Usul Council",
+        dept: "Fiqh & Usul",
+        avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200"
+      },
+      {
+        id: "TRB-103",
+        name: "Shaykh Dr. Tariq Al-Jamil",
+        role: "Dean of Islamic History & Civilizations",
+        dept: "Islamic History",
+        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200"
+      },
+      {
+        id: "TRB-104",
+        name: "Shaykh Nuruddin Al-Dimashqi",
+        role: "Director of Tasawwuf & Tazkiyah (TSF)",
+        dept: "Tasawwuf (TSF)",
+        avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=200"
+      },
+      {
+        id: "TRB-105",
+        name: "Dr. Rashid Kamal",
+        role: "Head of Natural Sciences & Biology",
+        dept: "Natural Sciences",
+        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200"
+      },
+      {
+        id: "TRB-106",
+        name: "Prof. Zaid Al-Hashimi",
+        role: "Lecturer in Political Science & Governance",
+        dept: "Political Science",
+        avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200"
+      }
+    ];
+
+    // Default Conduct Observations (Positive & Negative)
+    const defaultRemarks = [
+      {
+        id: "RM-1",
+        staffId: "TRB-101",
+        type: "POSITIVE",
+        category: "Exemplary Akhlaq & Mentorship",
+        points: 10,
+        date: "2026-09-22",
+        note: "Organized supplementary Sarf morphology drill sessions for beginner Arabic students with exceptional dedication.",
+        loggedBy: "Dean of Staff"
+      },
+      {
+        id: "RM-2",
+        staffId: "TRB-105",
+        type: "POSITIVE",
+        category: "Initiative & Scholarly Guidance",
+        points: 15,
+        date: "2026-09-24",
+        note: "Conducted laboratory safety workshops integrating faith-based ecological ethics.",
+        loggedBy: "Academic Director"
+      },
+      {
+        id: "RM-3",
+        staffId: "TRB-106",
+        type: "POSITIVE",
+        category: "Student Character Nurturing",
+        points: 10,
+        date: "2026-09-23",
+        note: "Delivered lecture on classical Islamic governance and civic duties.",
+        loggedBy: "Superintendent"
+      },
+      {
+        id: "RM-4",
+        staffId: "TRB-101",
+        type: "NEGATIVE",
+        category: "Late Arrival to Duty / Halaqah",
+        points: 4,
+        date: "2026-09-20",
+        note: "Arrived 15 minutes late to the morning assembly line-up without prior notification.",
+        loggedBy: "Discipline Lead"
+      },
+      {
+        id: "RM-5",
+        staffId: "TRB-106",
+        type: "NEGATIVE",
+        category: "Delayed Feedback / Evaluation",
+        points: 4,
+        date: "2026-09-18",
+        note: "Delayed submission of midterm political science grading sheets past the department cutoff.",
+        loggedBy: "Maktab Office"
+      }
+    ];
+
+    // Read synced records from localStorage or fall back to defaults
+    let staffMembers = JSON.parse(localStorage.getItem('tarbiyah_staff_list_v2')) || 
+                       JSON.parse(localStorage.getItem('tarbiyah_staff_list')) || 
+                       defaultStaff;
+
+    let remarks = JSON.parse(localStorage.getItem('tarbiyah_remarks_list_v2')) || 
+                  JSON.parse(localStorage.getItem('tarbiyah_remarks_list')) || 
+                  defaultRemarks;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderDashboard();
+
+      // Dismiss splash overlay after 1.6 seconds
+      setTimeout(() => {
+        const splash = document.getElementById('splashScreen');
+        splash.classList.add('opacity-0');
+        setTimeout(() => {
+          splash.style.display = 'none';
+        }, 650);
+      }, 1600);
+    });
+
+    // Score calculations
+    function getStaffScores(staffId) {
+      const staffRemarks = remarks.filter(r => r.staffId === staffId);
+      let positivePoints = 0;
+      let negativePoints = 0;
+      let positiveCount = 0;
+      let negativeCount = 0;
+
+      staffRemarks.forEach(r => {
+        if (r.type === 'POSITIVE') {
+          positivePoints += r.points;
+          positiveCount++;
+        } else if (r.type === 'NEGATIVE') {
+          negativePoints += r.points;
+          negativeCount++;
+        }
+      });
+
+      return {
+        positivePoints,
+        negativePoints,
+        positiveCount,
+        negativeCount,
+        netScore: positivePoints - negativePoints
+      };
+    }
+
+    function renderDashboard() {
+      document.getElementById('statTotalStaff').innerText = staffMembers.length;
+      document.getElementById('badgeStaffCount').innerText = staffMembers.length;
+      document.getElementById('badgeLogCount').innerText = remarks.length;
+
+      let totalPos = 0;
+      let totalNeg = 0;
+      let posCount = 0;
+      let negCount = 0;
+
+      remarks.forEach(r => {
+        if (r.type === 'POSITIVE') {
+          posCount++;
+          totalPos += r.points;
+        } else {
+          negCount++;
+          totalNeg += r.points;
+        }
+      });
+
+      document.getElementById('statPositiveCount').innerText = posCount;
+      document.getElementById('statPositivePoints').innerText = `+${totalPos} pts`;
+      document.getElementById('statNegativeCount').innerText = negCount;
+      document.getElementById('statNegativePoints').innerText = `-${totalNeg} pts`;
+
+      if (staffMembers.length > 0) {
+        let bestStaff = staffMembers[0];
+        let maxScore = -999;
+        staffMembers.forEach(s => {
+          const sc = getStaffScores(s.id).netScore;
+          if (sc > maxScore) {
+            maxScore = sc;
+            bestStaff = s;
+          }
+        });
+        document.getElementById('statTopStaff').innerText = bestStaff.name;
+        document.getElementById('statTopStaffScore').innerText = `Score: ${maxScore >= 0 ? '+' : ''}${maxScore} pts`;
+      }
+
+      applyFilters();
+      renderRemarksLog();
+    }
+
+    function applyFilters() {
+      const query = (document.getElementById('directorySearchInput')?.value || '').toLowerCase().trim();
+      const dept = document.getElementById('departmentFilter').value;
+      const standing = document.getElementById('standingFilter').value;
+
+      const grid = document.getElementById('staffCardsGrid');
+      const emptyState = document.getElementById('noStaffFound');
+      grid.innerHTML = '';
+
+      const filtered = staffMembers.filter(staff => {
+        const scores = getStaffScores(staff.id);
+        const matchesQuery = staff.name.toLowerCase().includes(query) ||
+                             staff.role.toLowerCase().includes(query) ||
+                             staff.id.toLowerCase().includes(query) ||
+                             staff.dept.toLowerCase().includes(query);
+
+        const matchesDept = (dept === 'ALL' || staff.dept === dept);
+
+        let matchesStanding = true;
+        if (standing === 'EXEMPLARY') {
+          matchesStanding = scores.netScore >= 20;
+        } else if (standing === 'GOOD') {
+          matchesStanding = scores.netScore >= 0 && scores.netScore < 20;
+        } else if (standing === 'NEEDS_TARBIYAH') {
+          matchesStanding = scores.netScore < 0;
+        }
+
+        return matchesQuery && matchesDept && matchesStanding;
+      });
+
+      if (filtered.length === 0) {
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      filtered.forEach(staff => {
+        const scores = getStaffScores(staff.id);
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-2xl border border-slate-200 hover:border-tarbiyah-500/40 p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between";
+
+        let scoreBadgeClass = "bg-emerald-50 text-emerald-700 border-emerald-200";
+        let scoreLabel = "Exemplary";
+        if (scores.netScore < 0) {
+          scoreBadgeClass = "bg-rose-50 text-rose-700 border-rose-200";
+          scoreLabel = "Needs Tarbiyah";
+        } else if (scores.netScore < 10) {
+          scoreBadgeClass = "bg-amber-50 text-amber-700 border-amber-200";
+          scoreLabel = "Developing";
+        } else if (scores.netScore >= 20) {
+          scoreBadgeClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
+          scoreLabel = "Exemplary";
+        }
+
+        card.innerHTML = `
+          <div>
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <img src="${staff.avatar}" alt="${staff.name}" class="w-13 h-13 rounded-2xl object-cover ring-2 ring-emerald-500/20 shadow-xs" onerror="this.src='https://placehold.co/120x120/047857/ffffff?text=${encodeURIComponent(staff.name.charAt(0))}'">
+                <div>
+                  <h3 class="font-bold text-slate-900 text-sm leading-snug">${escapeHtml(staff.name)}</h3>
+                  <p class="text-xs text-slate-500">${escapeHtml(staff.role)}</p>
+                  <span class="inline-block mt-1 font-mono text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded font-semibold">${staff.id}</span>
+                </div>
+              </div>
+              <span class="text-[11px] font-bold px-2.5 py-1 rounded-full border ${scoreBadgeClass}">
+                ${scoreLabel}
+              </span>
+            </div>
+
+            <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600">
+              <span class="text-slate-400"><i class="fa-solid fa-layer-group text-slate-400 mr-1 text-[11px]"></i> Department:</span>
+              <span class="font-semibold text-slate-800 bg-slate-100/90 px-2 py-0.5 rounded-md">${staff.dept}</span>
+            </div>
+
+            <!-- Net Tarbiyah Score Card (Positive & Negative Breakdown) -->
+            <div class="mt-4 bg-slate-50 rounded-xl p-3 border border-slate-100">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-slate-600">Net Tarbiyah Standing</span>
+                <span class="text-sm font-extrabold ${scores.netScore >= 0 ? 'text-emerald-700' : 'text-rose-600'}">
+                  ${scores.netScore >= 0 ? '+' + scores.netScore : scores.netScore} pts
+                </span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2 text-center pt-2 border-t border-slate-200/60">
+                <div class="bg-emerald-50/70 p-2 rounded-lg border border-emerald-100">
+                  <div class="flex items-center justify-center gap-1 text-emerald-700 text-xs font-bold">
+                    <i class="fa-solid fa-circle-plus text-[11px]"></i> Positive
+                  </div>
+                  <span class="text-base font-extrabold text-emerald-800">+${scores.positivePoints}</span>
+                  <span class="text-[10px] block text-emerald-600 font-medium">(${scores.positiveCount} merits)</span>
+                </div>
+
+                <div class="bg-rose-50/70 p-2 rounded-lg border border-rose-100">
+                  <div class="flex items-center justify-center gap-1 text-rose-700 text-xs font-bold">
+                    <i class="fa-solid fa-circle-minus text-[11px]"></i> Negative
+                  </div>
+                  <span class="text-base font-extrabold text-rose-800">-${scores.negativePoints}</span>
+                  <span class="text-[10px] block text-rose-600 font-medium">(${scores.negativeCount} demerits)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-[11px] text-slate-400 font-medium"><i class="fa-solid fa-shield-halved mr-1 text-[10px]"></i> Verified Conduct</span>
+            <button onclick="viewMemberHistory('${staff.id}')" class="px-3 py-1.5 text-xs font-bold bg-tarbiyah-50 hover:bg-tarbiyah-100 text-tarbiyah-800 rounded-xl transition">
+              View Remarks <i class="fa-solid fa-arrow-right text-[10px] ml-1"></i>
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function quickSearch(e) {
+      document.getElementById('directorySearchInput').value = e.target.value;
+      applyFilters();
+    }
+
+    function viewMemberHistory(staffId) {
+      const staff = staffMembers.find(s => s.id === staffId);
+      if (!staff) return;
+      document.getElementById('directorySearchInput').value = staff.name;
+      applyFilters();
+      switchTab('remarksLog');
+      renderRemarksLog(staffId);
+    }
+
+    // Render timeline records with positive (+) or negative (-) tags
+    function renderRemarksLog(filterStaffId = null) {
+      const container = document.getElementById('remarksTimelineList');
+      const emptyState = document.getElementById('noRemarksFound');
+      container.innerHTML = '';
+
+      let filtered = remarks;
+      if (currentLogFilter !== 'ALL') {
+        filtered = filtered.filter(r => r.type === currentLogFilter);
+      }
+      if (filterStaffId) {
+        filtered = filtered.filter(r => r.staffId === filterStaffId);
+      }
+
+      if (filtered.length === 0) {
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      filtered.slice().reverse().forEach(r => {
+        const staff = staffMembers.find(s => s.id === r.staffId) || { name: 'Faculty Member', avatar: '', dept: '' };
+        const isPos = (r.type === 'POSITIVE');
+
+        const item = document.createElement('div');
+        item.className = "py-3 sm:py-4 flex flex-col sm:flex-row sm:items-start justify-between gap-3";
+        item.innerHTML = `
+          <div class="flex items-start gap-3">
+            <img src="${staff.avatar}" class="w-10 h-10 rounded-xl object-cover shrink-0 ring-1 ring-slate-200" onerror="this.src='https://placehold.co/80x80/047857/ffffff?text=U'">
+            <div class="space-y-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="font-bold text-slate-900 text-xs sm:text-sm">${escapeHtml(staff.name)}</span>
+                <span class="text-[10px] font-mono bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">${r.staffId}</span>
+                <span class="text-[10px] font-semibold text-slate-500">${staff.dept}</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${isPos ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+                  ${isPos ? '+ Positive Merit' : '- Negative Demerit'}
+                </span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed font-medium">${escapeHtml(r.note)}</p>
+              <div class="flex items-center gap-3 text-[11px] text-slate-400">
+                <span><i class="fa-regular fa-calendar mr-1"></i>${r.date}</span>
+                <span><i class="fa-solid fa-tag mr-1"></i>${r.category}</span>
+                <span><i class="fa-solid fa-user-check mr-1"></i>${r.loggedBy}</span>
+              </div>
+            </div>
+          </div>
+          <div class="sm:text-right shrink-0">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-extrabold ${isPos ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200'}">
+              <i class="fa-solid ${isPos ? 'fa-plus' : 'fa-minus'} text-[10px]"></i> ${r.points} pts
+            </span>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function filterRemarksLog(type) {
+      currentLogFilter = type;
+      ['All', 'Positive', 'Negative'].forEach(t => {
+        const btn = document.getElementById(`filterLog${t}`);
+        if (t.toUpperCase() === type) {
+          btn.className = "px-3 py-1.5 text-xs font-bold rounded-lg bg-white shadow-xs text-slate-900";
+        } else {
+          btn.className = "px-3 py-1.5 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-800";
+        }
+      });
+      renderRemarksLog();
+    }
+
+    function resetFilters() {
+      document.getElementById('directorySearchInput').value = '';
+      document.getElementById('departmentFilter').value = 'ALL';
+      document.getElementById('standingFilter').value = 'ALL';
+      applyFilters();
+    }
+
+    function switchTab(tabKey) {
+      ['directory', 'remarksLog'].forEach(t => {
+        const btn = document.getElementById(`tabBtn${capitalize(t)}`);
+        const content = document.getElementById(`tabContent${capitalize(t)}`);
+        if (t === tabKey) {
+          btn.className = "pb-3 px-1 border-b-2 border-tarbiyah-700 font-bold text-sm text-tarbiyah-800 flex items-center gap-2 whitespace-nowrap";
+          content.classList.remove('hidden');
+        } else {
+          btn.className = "pb-3 px-1 border-b-2 border-transparent font-medium text-sm text-slate-500 hover:text-slate-700 hover:border-slate-300 flex items-center gap-2 whitespace-nowrap";
+          content.classList.add('hidden');
+        }
+      });
+    }
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+</html>
